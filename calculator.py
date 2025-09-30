@@ -13,24 +13,23 @@ def divide(x, y):
     return x / y
 
 if __name__ == "__main__":
-    print("Select operation:")
-    print("1. Add")
-    print("2. Subtract")
-    print("3. Multiply")
-    print("4. Divide")
+    print("Basic Calculator - Standard Order of Operations")
+    print("Available operations: +, -, *, /")
+    print("Enter your calculation as a standard math expression (e.g., 2 + 3 * 4 - 5 / 2)")
 
-    choice = input("Enter choice (1/2/3/4): ")
-
-    num1 = float(input("Enter first number: "))
-    num2 = float(input("Enter second number: "))
-
-    if choice == '1':
-        print(f"{num1} + {num2} = {add(num1, num2)}")
-    elif choice == '2':
-        print(f"{num1} - {num2} = {subtract(num1, num2)}")
-    elif choice == '3':
-        print(f"{num1} * {num2} = {multiply(num1, num2)}")
-    elif choice == '4':
-        print(f"{num1} / {num2} = {divide(num1, num2)}")
-    else:
-        print("Invalid input")
+    expr = input("Enter your calculation: ")
+    try:
+        # Only allow safe characters
+        allowed = set("0123456789+-*/. ()")
+        if not set(expr).issubset(allowed):
+            raise ValueError("Invalid characters in input.")
+        # Replace division by zero with error message
+        if "/ 0" in expr.replace(' ', ''):
+            print("Error: Division by zero")
+        else:
+            result = eval(expr)
+            print(f"Result: {result}")
+    except ZeroDivisionError:
+        print("Error: Division by zero")
+    except Exception as e:
+        print(f"Error: {e}")
